@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_exam_form_view" model="ir.ui.view">
+        <field name="name">school.exam.form</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="class_id"/>
+                        </group>
+                        <group>
+                            <field name="exam_subject"/>
+                            <field name="fee"/>
+                            <field name="officer_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_exam_tree_view" model="ir.ui.view">
+        <field name="name">school.exam.tree</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <tree string="Exam">
+                <field name="student_id"/>
+                <field name="class_id"/>
+                <field name="exam_subject"/>
+                <field name="officer_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_exam_pivot_view" model="ir.ui.view">
+        <field name="name">school.exam.pivot</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <pivot string="School" disable_linking="True" sample="1">
+                <field name="student_id"/>
+                <field name="class_id"/>
+                <field name="exam_subject"/>
+                <field name="officer_id"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_exam" model="ir.actions.act_window">
+        <field name="name">Exam</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.exam</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+
+    <menuitem
+        id="exam_menu_view"
+        name="Exam"
+        parent="school_menu"
+        action="action_exam"
+        sequence="40"/>
+
+</odoo>

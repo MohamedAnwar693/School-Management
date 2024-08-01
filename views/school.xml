@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_class_form_view" model="ir.ui.view">
+        <field name="name">school.student.form</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="admin_code"/>
+                            <field name="name"/>
+                            <field name="address"/>
+                            <field name="class_id"/>
+                            <field name="division"/>
+                        </group>
+                        <group>
+                            <field name="dob"/>
+                            <field name="age"/>
+                            <field name="admin_date"/>
+                            <field name="officer_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_class_tree_view" model="ir.ui.view">
+        <field name="name">school.student.tree</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <tree string="Student"
+                decoration-danger="admin_date &lt; current_date"
+                decoration-success="admin_date == current_date"
+                decoration-muted="admin_date &gt; current_date">
+                <field name="admin_code"/>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="admin_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_student_search" model="ir.ui.view">
+        <field name="name">school.student.search</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <search string="Search Student">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="school_group_view" model="ir.ui.view">
+        <field name="name">school.student.group</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <graph string="Search Anlaysis">
+                <field name="name" type="row"/>
+                <field name="class_id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="school_calendar_view" model="ir.ui.view">
+        <field name="name">school.student.calendar</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <calendar string="School" date_start="admin_date" mode="month"
+            color="name" event_open_popup="true" quick_add="False">
+                <field name="name"/>
+                <field name="class_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="school_pivot_view" model="ir.ui.view">
+        <field name="name">school.student.pivot</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <pivot string="School" disable_linking="True" sample="1">
+                <field name="name"/>
+                <field name="class_id"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">Student</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">tree,kanban,calendar,graph,pivot,form</field>
+    </record>
+
+    <menuitem
+        id="school_menu"
+        name="School"
+        sequence="8"/>
+    <menuitem
+        id="school_exams_menu"
+        name="School"
+        parent="school_menu"
+        action="action_student"
+        sequence="10"/>
+
+</odoo>

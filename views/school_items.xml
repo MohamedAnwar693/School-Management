@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="school_items_form_view" model="ir.ui.view">
+        <field name="name">school.items.form</field>
+        <field name="model">school.items</field>
+        <field name="arch" type="xml">
+            <form string="School_Items">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id" groups="account.group_account_manager"/>
+                            <field name="class_id"/>
+                        </group>
+                        <group>
+                            <field name="division"/>
+                            <field name="admin_date"/>
+                            <field name="product_ids" widget="many2Many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_items_tree_view" model="ir.ui.view">
+        <field name="name">school.items.tree</field>
+        <field name="model">school.items</field>
+        <field name="arch" type="xml">
+            <tree string="School_Items">
+                <field name="student_id"/>
+                <field name="class_id"/>
+                <field name="division"/>
+                <field name="admin_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_school_items" model="ir.actions.act_window">
+        <field name="name">School Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">school.items</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <menuitem
+        id="school_items_menu"
+        name="School Items"
+        parent="school_menu"
+        action="action_school_items"
+        sequence="30"/>
+
+</odoo>
